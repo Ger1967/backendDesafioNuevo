@@ -5,6 +5,9 @@ const knex = require("knex")({
     user: "postgres",
     port: 5432,
     password: "postgres",
-    database: "deportistas",
+    // password: "postgre",
+    database: "Deportistas",
   },
 });
+
+module.exports = knex;

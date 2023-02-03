@@ -23,6 +23,7 @@ exports.listEstadisticas = (req, res) => {
     });
 };
 
+//
 exports.listEstadisticasById = (req, res) => {
   const id = req.params.id;
   knex("estadisticas")

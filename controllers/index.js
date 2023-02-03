@@ -22,3 +22,15 @@ exports.listEstadisticas = (req, res) => {
       res.status(400).json({ error: error.message });
     });
 };
+
+exports.listEstadisticasById = (req, res) => {
+  const id = req.params.id;
+  knex("estadisticas")
+    .where("id", id)
+    .then((resultado) => {
+      res.json(resultado);
+    })
+    .catch((error) => {
+      res.status(400).json({ error: error.message });
+    });
+};

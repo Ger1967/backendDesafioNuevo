@@ -66,3 +66,31 @@ exports.register = async (req, res) => {
       res.status(400).json({ error: error.message });
     });
 };
+
+exports.agregarEstadisticas = async (req, res) => {
+  const {
+    energia,
+    fuerza,
+    resistencia,
+    agilidad,
+    aguante,
+    dedicacion,
+    profecionalismo,
+  } = req.body;
+  knex("estadisticas")
+    .insert({
+      energia: energia,
+      fuerza: fuerza,
+      resistencia: resistencia,
+      agilidad: agilidad,
+      aguante: aguante,
+      dedicacion: dedicacion,
+      profecionalismo: profecionalismo,
+    })
+    .then((resultado) => {
+      res.json({ messagee: "Se ha registrado un nuevo deportista" });
+    })
+    .catch((error) => {
+      res.status(400).json({ error: error.message });
+    });
+};

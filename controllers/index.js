@@ -69,6 +69,7 @@ exports.register = async (req, res) => {
 
 exports.agregarEstadisticas = async (req, res) => {
   const {
+    id,
     energia,
     fuerza,
     resistencia,
@@ -79,6 +80,7 @@ exports.agregarEstadisticas = async (req, res) => {
   } = req.body;
   knex("estadisticas")
     .insert({
+      id: id,
       energia: energia,
       fuerza: fuerza,
       resistencia: resistencia,

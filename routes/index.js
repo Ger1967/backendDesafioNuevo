@@ -6,6 +6,7 @@ const {
   listEstadisticasById,
   register,
   agregarEstadisticas,
+  // multer,
   // addFoto,
 } = require("../controllers/index");
 
@@ -15,5 +16,6 @@ router.get("/estadisticas/:id", listEstadisticasById);
 router.post("/deportistas/register", register);
 router.post("/deportistas/add/estadisticas", agregarEstadisticas);
 // router.post("/deportistas/add/foto/:id", addFoto);
+// router.post("/deportistas/add/foto/multer", multer);
 
 module.exports = router;

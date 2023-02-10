@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+// const multer = require("multer");
 
 const deportistasRouter = require("./routes/index");
 
@@ -12,6 +13,7 @@ app.use(morgan("dev"));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(cookieParser());
+// app.use(multer());
 
 app.use("/api", deportistasRouter);
 

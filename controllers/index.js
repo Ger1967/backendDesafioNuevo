@@ -1,6 +1,6 @@
 const knex = require("../config/knexFile");
-const formidable = require("formidable");
-const fs = require("fs");
+// const formidable = require("formidable");
+// const fs = require("fs");
 // const bcrypt = require("bcrypt");
 // const jwt = require("jsonwebtoken");
 // const { TOKEN_SECRET } = require("../validators/jwt");
@@ -99,54 +99,54 @@ exports.agregarEstadisticas = async (req, res) => {
     });
 };
 
-exports.addFoto = async (req, res, next) => {
-  const { id } = req.params.id;
-  const { addFoto } = req.body;
-  const form = formidable.IncomingForm();
-  const uploadFolder = path.join(__dirname, "Img");
-  form.multiples = true;
-  form.maxFileSize = 50 * 50 * 50;
-  form.uploadDir = uploadFolder;
-  form.parse(req, async (err, fields, files) => {
-    if (err) {
-      console.log("Error parsing the files");
-      return res.status(400).json({
-        status: "Fail",
-        message: "There was an arror parsing the files",
-        error: err,
-      });
-    }
-    if (!files.myFile.length) {
-      const file = files.myFile;
-      const isValid = isFileValid(file);
-      const fileName = encodeURIComponent(file.name.replace(/\s/g, "-"));
-      if (!isValid) {
-        return res.status(400).json({
-          status: "Fail",
-          message: "The file type is not a valid type",
-        });
-      }
-      try {
-        fs.renameSync(file.path, join(uploadFolder, fileName));
-      } catch (error) {
-        console.log(error);
-      }
-      try {
-        const newFile = await File.create({
-          name: `Img/${fileName}`,
-        });
-        knex("deportistas").insert({ foto: addFoto.foto }).where("id", id);
-        return res.status(200).json({
-          status: "success",
-          message: "File created successfully!!",
-          file: newFile.name,
-        });
-      } catch (error) {
-        res.json({
-          error,
-        });
-      }
-    } else {
-    }
-  });
-};
+// exports.addFoto = async (req, res, next) => {
+//   const { id } = req.params.id;
+//   const { addFoto } = req.body;
+//   const form = formidable.IncomingForm();
+//   const uploadFolder = path.join(__dirname, "public", "img");
+//   form.multiples = true;
+//   form.maxFileSize = 50 * 50 * 50;
+//   form.uploadDir = uploadFolder;
+//   form.parse(req, async (err, fields, files) => {
+//     if (err) {
+//       console.log("Error parsing the files");
+//       return res.status(400).json({
+//         status: "Fail",
+//         message: "There was an arror parsing the files",
+//         error: err,
+//       });
+//     }
+//     if (!files.myFile.length) {
+//       const file = files.myFile;
+//       const isValid = isFileValid(file);
+//       const fileName = encodeURIComponent(file.name.replace(/\s/g, "-"));
+//       if (!isValid) {
+//         return res.status(400).json({
+//           status: "Fail",
+//           message: "The file type is not a valid type",
+//         });
+//       }
+//       try {
+//         fs.renameSync(file.path, join(uploadFolder, fileName));
+//       } catch (error) {
+//         console.log(error);
+//       }
+//       try {
+//         const newFile = await File.create({
+//           name: `Img/${fileName}`,
+//         });
+//         knex("deportistas").insert({ foto: addFoto.foto }).where("id", id);
+//         return res.status(200).json({
+//           status: "success",
+//           message: "File created successfully!!",
+//           file: newFile.name,
+//         });
+//       } catch (error) {
+//         res.json({
+//           error,
+//         });
+//       }
+//     } else {
+//     }
+//   });
+// };

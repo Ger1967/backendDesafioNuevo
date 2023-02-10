@@ -4,6 +4,9 @@ const knex = require("../config/knexFile");
 // const bcrypt = require("bcrypt");
 // const jwt = require("jsonwebtoken");
 // const { TOKEN_SECRET } = require("../validators/jwt");
+const multer = require("multer");
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 exports.list = (req, res) => {
   knex("deportistas")
@@ -99,8 +102,10 @@ exports.agregarEstadisticas = async (req, res) => {
     });
 };
 
+// ______________________CON FORMIDABLE______________________
+
 // exports.addFoto = async (req, res, next) => {
-//   const { id } = req.params.id;
+//   const { id } = req.params;
 //   const { addFoto } = req.body;
 //   const form = formidable.IncomingForm();
 //   const uploadFolder = path.join(__dirname, "public", "img");
@@ -147,6 +152,19 @@ exports.agregarEstadisticas = async (req, res) => {
 //         });
 //       }
 //     } else {
+//       //
 //     }
 //   });
+// };
+
+//_______________________ CON MULTER (intento)_______________________________
+
+// exports.multerasync = async (req, res) => {
+//   try {
+//     const { image } = req.body;
+//     const result = await knex("usuarios").insert({ image });
+//     res.status(200).send({ message: "Se subio imgen correctamente" });
+//   } catch (error) {
+//     res.status(500).send({ message: "Error en subir la imagen" });
+//   }
 // };

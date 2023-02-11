@@ -4,9 +4,9 @@ const knex = require("../config/knexFile");
 // const bcrypt = require("bcrypt");
 // const jwt = require("jsonwebtoken");
 // const { TOKEN_SECRET } = require("../validators/jwt");
-const multer = require("multer");
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+// const multer = require("multer");
+// const storage = multer.memoryStorage();
+// const upload = multer({ storage: storage });
 
 exports.list = (req, res) => {
   knex("deportistas")
@@ -74,7 +74,6 @@ exports.register = async (req, res) => {
 
 exports.agregarEstadisticas = async (req, res) => {
   const {
-    id,
     energia,
     fuerza,
     resistencia,
@@ -85,7 +84,6 @@ exports.agregarEstadisticas = async (req, res) => {
   } = req.body;
   knex("estadisticas")
     .insert({
-      id: id,
       energia: energia,
       fuerza: fuerza,
       resistencia: resistencia,
@@ -96,6 +94,24 @@ exports.agregarEstadisticas = async (req, res) => {
     })
     .then((resultado) => {
       res.json({ messagee: "Se ha registrado un nuevo deportista" });
+    })
+    .catch((error) => {
+      res.status(400).json({ error: error.message });
+    });
+};
+
+exports.deleteDeportista = (req, res) => {
+  const id = req.params.id;
+  knex("estadisticas")
+    .where("estadisticas.id", id)
+    .del()
+    .then(() => {
+      knex("deportistas")
+        .where("deportistas.id", id)
+        .del()
+        .then(() => {
+          res.json({ message: "El registro ha sido eliminado exitosamente" });
+        });
     })
     .catch((error) => {
       res.status(400).json({ error: error.message });

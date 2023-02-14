@@ -1,11 +1,22 @@
 const knex = require("../config/knexFile");
-// const formidable = require("formidable");
-// const fs = require("fs");
-// const bcrypt = require("bcrypt");
-// const jwt = require("jsonwebtoken");
-// const { TOKEN_SECRET } = require("../validators/jwt");
+/* Imports formidable:
+const formidable = require("formidable");
+const fs = require("fs");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { TOKEN_SECRET } = require("../validators/jwt"); */
+
+/*Configuracion multer para el endpoint de subir foto*/
 const multer = require("multer");
-const storage = multer.memoryStorage();
+//Crea objeto de almacenamiento:
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./img"); //Carpeta donde se va a guardar
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + ".jpg"); //Nombre del archivo tiene que terminar en .jpg para que se guarde como imagen
+  },
+});
 const upload = multer({ storage: storage });
 
 exports.list = (req, res) => {
@@ -102,9 +113,9 @@ exports.agregarEstadisticas = async (req, res) => {
     });
 };
 
-// ______________________CON FORMIDABLE______________________
+// ______________________CON FORMIDABLE((sin terminar)_____________________
 
-// exports.addFoto = async (req, res, next) => {
+// exports.formidable = async (req, res, next) => {
 //   const { id } = req.params;
 //   const { addFoto } = req.body;
 //   const form = formidable.IncomingForm();
@@ -157,14 +168,12 @@ exports.agregarEstadisticas = async (req, res) => {
 //   });
 // };
 
-//_______________________ CON MULTER (intento)_______________________________
-
-// exports.multerasync = async (req, res) => {
-//   try {
-//     const { image } = req.body;
-//     const result = await knex("usuarios").insert({ image });
-//     res.status(200).send({ message: "Se subio imgen correctamente" });
-//   } catch (error) {
-//     res.status(500).send({ message: "Error en subir la imagen" });
-//   }
-// };
+//_______________________ CON MULTER __________________________________________
+(exports.addFoto = upload.single("img")), //single -> metodo de la libreria para subir UN solo archivo
+  (req, res) => {
+    try {
+      res.send("Imagen subida correctamente");
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  };
